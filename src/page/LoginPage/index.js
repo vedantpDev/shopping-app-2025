@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../firebase";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -16,8 +19,10 @@ const LoginPage = () => {
         userData.email,
         userData.password
       );
-      console.log("Successfully logged in user:", userCred.user.email);
-      console.log(userCred);
+
+      const accessToken = userCred.user.accessToken;
+      localStorage.setItem("accessToken", accessToken);
+      navigate("/");
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -134,12 +139,12 @@ const LoginPage = () => {
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a member?
-            <a
-              href="#"
-              className="font-semibold text-indigo-600 hover:text-indigo-500"
+            <Link
+              to="/register"
+              className="ml-2 font-semibold text-indigo-600 hover:text-indigo-500"
             >
-              Start a 14 day free trial
-            </a>
+              Register Now
+            </Link>
           </p>
         </div>
       </div>

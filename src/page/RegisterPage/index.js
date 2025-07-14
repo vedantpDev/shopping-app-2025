@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { useNavigate } from "react-router-dom";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase";
 
 const RegisterPage = () => {
-  //   const auth = getAuth();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -13,12 +15,24 @@ const RegisterPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(
+      const userCred = await createUserWithEmailAndPassword(
         auth,
         userData.email,
         userData.password
       );
-      console.log(userCredential.user.email);
+      let userUid = userCred.user.uid;
+      let displayName = userCred.user.displayName || "";
+      let email = userCred.user.email;
+      let accessToken = userCred.user.accessToken;
+      let lastLogin = new Date().toISOString();
+
+      const userDataToStore = { displayName, email, lastLogin };
+
+      const userDocRef = doc(db, "user-data", userUid);
+
+      await setDoc(userDocRef, userDataToStore);
+      localStorage.setItem("accessToken", accessToken);
+      navigate("/");
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
