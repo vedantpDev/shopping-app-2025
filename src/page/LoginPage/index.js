@@ -21,7 +21,14 @@ const LoginPage = () => {
       );
 
       const accessToken = userCred.user.accessToken;
+      const userDataLocalStorage = {
+        email: userCred.user.email,
+        displayName: userCred.user.displayName,
+        userId: userCred.user.uid,
+      };
       localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("userData", JSON.stringify(userDataLocalStorage));
+
       navigate("/");
     } catch (error) {
       const errorCode = error.code;

@@ -1,12 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const userData = useSelector((state) => state.user);
+
   return (
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
         <div className="text-gray-100 max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <p>ljghb</p>
+          <p>{userData.displayName || "Name is not Available"}</p>
           <button
             data-collapse-toggle="navbar-default"
             type="button"
@@ -24,9 +27,9 @@ const Navbar = () => {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M1 1h15M1 7h15M1 13h15"
               />
             </svg>
