@@ -6,6 +6,9 @@ import { Route, Routes } from "react-router-dom";
 import PrivateRoutes from "./privateRoutes";
 import Home from "./page/Home";
 import PublicRoutes from "./publicRoute";
+import About from "./page/About";
+import Services from "./page/Services";
+import Contact from "./page/Contact";
 
 function App() {
   return (
@@ -32,6 +35,30 @@ function App() {
           element={
             <PrivateRoutes>
               <Home />
+            </PrivateRoutes>
+          }
+        />{" "}
+        <Route
+          path="/about"
+          element={
+            <PrivateRoutes>
+              <About />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/services"
+          element={
+            <PrivateRoutes>
+              <Services />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <PrivateRoutes>
+              <Contact />
             </PrivateRoutes>
           }
         />
