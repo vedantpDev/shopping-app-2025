@@ -24,6 +24,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const {} = userSlice.actions;
+export const { setEmail, setName, setUserId } = userSlice.actions;
 
 export default userSlice.reducer;
